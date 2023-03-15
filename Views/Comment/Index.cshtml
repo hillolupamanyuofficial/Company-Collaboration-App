@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CCbook2.Entities.Comment>
+@using CCbook2.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Comments</h1>
+
+<p>
+    <h1></h1>
+    <a asp-action="Create" asp-route-postId="@ViewBag.PostId">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommentorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDateTime)
+            </td>
+            <td>
+@*                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                @if(UserManager.GetUserName(User) == item.CommentorName){
+                                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

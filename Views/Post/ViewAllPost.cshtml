@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CCbook2.Entities.Post>
+@using CCbook2.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    ViewData["Title"] = "ViewAllPost";
+}
+
+<h1>All Posts {Home Page}</h1>
+
+@*<p>
+    <a asp-action="Create" asp-route-userId="@UserManager.GetUserId(User)">Create New Post</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PostedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Likes)
+                </td>
+                <td>
+@*                                        <a asp-action="Edit" asp-route-userId="@UserManager.GetUserId(User)">Edit</a> |
+*@                   @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <button type="button" class="btn btn-primary">Like</button> |
+                    <a asp-controller="Comment" asp-action="Index" asp-route-postId="@item.Id">Comments</a>
+@*                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+*@                     
+@*                    <a href="#">Like</a> |
+                    <a href="#">Comment</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
